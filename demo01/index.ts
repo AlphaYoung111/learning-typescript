@@ -186,16 +186,381 @@
 
 
 // 属性接口
-interface FullName{
-  firstName: string,
-  secondName:string
+// interface FullName{
+//   firstName: string,
+//   secondName:string
+// }
+// function printName(name:FullName): void{
+//   console.log(name.firstName+name.secondName);
+// }
+// var obj = {
+//   age: 15,
+//   firstName: '张',
+//   secondName: '三'
+// }
+// printName(obj)
+
+//接口案例ajax
+// interface Config {
+//   type: string,
+//   url: string,
+//   data?: string,
+//   dataType: string
+// }
+// function ajax(config: Config): void {
+//   var xhr = new XMLHttpRequest()
+//   xhr.open(config.type, config.url, true)
+//   xhr.send(config.data)
+//   xhr.onreadystatechange = function (): void {
+//     if (xhr.readyState === 4 && xhr.status === 200) {
+//       console.log('success');
+//       if (config.dataType == 'json') {
+//         console.log(JSON.parse(xhr.responseText))
+//       } else {
+//         console.log(xhr.responseText);
+//       }
+//     }
+//   }
+// }
+
+// ajax({
+//   type: 'get',
+//   url: 'http://a.itying.com/api/productlist',
+//   dataType:'json'
+// })
+
+// 函数类型接口
+// interface encrypt{
+//   (k:string,value:number):string
+// }
+// let md5: encrypt=function(n: string, s: number): string{
+//   return n+s
+// }
+// let md6: encrypt = (n, s) => n + s
+// console.log(md6('b',2));
+// console.log(md5('a',1));
+
+
+
+//可索引接口
+// interface UserArr{
+//   [index:number]:string
+// }
+// interface UserObj{
+//   [index:string]:string
+// }
+// let arr: UserArr = ['1', '2']
+// let obj:UserObj={name:'aa',sex:'man'}
+// console.log(arr[0]);
+
+
+
+//类类型接口
+// interface Animal{
+//   name: string,
+//   eat(str:string):void
+// }
+// class Dog implements Animal{
+//   public name:string
+//   constructor(name: string) {
+//     this.name = name
+//   }
+//   eat():void {
+//     console.log(this.name);
+//   }
+// }
+
+// let d = new Dog('骨头')
+// d.eat()
+
+
+
+// // 接口的扩展：继承
+// interface Animal {
+//   eat(): void
+// }
+// interface Person extends Animal {
+//   work(): void
+// }
+// class Human {
+//   public name: string
+//   constructor(name: string) {
+//     this.name = name
+//   }
+// }
+// class Man extends Human implements Person {
+//   constructor(name: string) {
+//     super(name)
+//   }
+//   eat(): void {
+//     console.log(this.name);
+//   }
+//   work(): void {
+//     console.log(this.name + 'work');
+//   }
+// }
+// let m = new Man('aa')
+// m.eat()
+// m.work()
+
+
+// 泛型
+// function getData<T>(value: T): T {
+//   return value
+// }
+// console.log(getData<number[]>([1,2]))
+
+
+// 泛型类
+// class MixClass<T>{
+//   public list: T[] = []
+//   add(value: T): void {
+//     this.list.push(value)
+//   }
+//   smaller(): T {
+//     var minNum = this.list[0]
+//     this.list.forEach(item => {
+//       if (item < minNum) {
+//         minNum=item
+//       }
+//     })
+//     return minNum
+//   }
+// }
+// let m = new MixClass<string>()
+// m.add('z')
+// m.add('a')
+// m.add('b')
+// m.add('c')
+// console.log(m.smaller())
+
+
+// 泛型接口
+// interface Config{
+//   <T>(value:T):T
+// }
+
+// let getData: Config = function <T>(value: T): T{
+//   return value
+// }
+// let setData: Config = <T>(value: T) => value
+
+// console.log(setData<number>(1));
+// console.log(getData<string>('aa'));
+// interface user<T> {
+//   (value: T): T
+// }
+// function set<T>(value: T): T {
+//   return value
+// }
+// let my: user<string> = set
+// console.log(my('ww'))
+
+
+
+//泛型类扩展,将类作为参数传递
+// class User {
+//   public name: string | undefined
+//   public password: string | undefined
+// }
+// class MysqlDB<T>{
+//   add(user: T): boolean {
+//     console.log(user);
+//     return true
+//   }
+// }
+// let u = new User()
+// u.name = 'aa'
+// u.password = 'bb'
+// let db = new MysqlDB<User>()
+// db.add(u)
+
+// class ArticleCate {
+//   public title: string 
+//   public desc: string
+//   public status: number |undefined
+//   constructor(params: {
+//     title: string,
+//     desc: string,
+//     status?: number
+//   }) {
+//     this.title = params.title
+//     this.desc = params.desc
+//     this.status = params.status
+//   }
+// }
+// const obj = {
+//   title: 'aa',
+//   desc: 'bb',
+//   status:1
+// }
+// let article = new ArticleCate(obj)
+// let db2 = new MysqlDB<ArticleCate>()
+// db2.add(article)
+
+
+
+
+// // 使用综合知识进行操作数据库封装
+// interface DBI<T>{
+//   add(info:T):boolean
+//   update(into:T,id:number):boolean
+//   delete(id:number):boolean
+//   get(id:number):any[]
+// }
+
+// class MysqlDB<T> implements DBI<T>{
+//   add(info: T): boolean {
+//     console.log(info);
+//     return true
+//   }
+//   update(into: T, id: number): boolean {
+//     throw new Error("Method not implemented.");
+//   }
+//   delete(id: number): boolean {
+//     throw new Error("Method not implemented.");
+//   }
+//   get(id: number): any[] {
+//     throw new Error("Method not implemented.");
+//   }
+
+// }
+
+// class User{
+//   username: string | undefined
+//   password:string | undefined
+// }
+// var u = new User()
+// u.username = 'aa'
+// u.password = 'bb'
+// var mysql = new MysqlDB<User>()
+// mysql.add(u)
+
+
+// 模块化
+// import { getData } from './module/db'
+// getData()
+
+
+// 命名空间
+// namespace A {
+//   interface Animal {
+//     eat(): void
+//   }
+//   interface Person extends Animal {
+//     work(): void
+//   }
+//   export class Human {
+//     public name: string
+//     constructor(name: string) {
+//       this.name = name
+//     }
+//   }
+//   export class Man extends Human implements Person {
+//     constructor(name: string) {
+//       super(name)
+//     }
+//     eat(): void {
+//       console.log(this.name);
+//     }
+//     work(): void {
+//       console.log(this.name + 'work');
+//     }
+//   }
+// }
+
+// var a = new A.Man('aa')
+// a.eat()
+
+
+
+
+// 装饰器
+// 类装饰器(无参数)
+// function logClass(params: any):void{
+//   console.log(params);
+//   params.prototype.apiUrl = '装饰器'
+//   params.prototype.run = function ():void {
+//     console.log('我是装饰器的run方法');
+//   }
+// }
+
+// @logClass
+// class user {
+//   public name: string
+//   constructor(name: string) {
+//     this.name = name
+//   }
+// }
+// var h: any = new user('aa')
+// console.log(h.apiUrl);
+// h.run()
+
+
+// 类装饰器  装饰器工厂，有参数
+// function logClass(params: string):any {
+//   return function (target: any):void {
+//     console.log(params);
+//     target.prototype.apiUrl = '装饰器'
+//     target.prototype.run = function (): void {
+//       console.log('我是装饰器的run方法');
+//     }
+//   }
+// }
+
+// @logClass('hello')
+// class user {
+//   public name: string
+//   constructor(name: string) {
+//     this.name = name
+//   }
+// }
+// var h: any = new user('aa')
+// console.log(h.apiUrl);
+// h.run()
+
+
+// 装饰器的重载
+// function logClass(target: any): any {
+//   return class extends target{
+//     public name:string = '我是重载后'
+//   }
+// }
+
+// @logClass
+// class user {
+//   public name: string
+//   constructor(name: string) {
+//     this.name = name
+//   }
+//   run(): void{
+//     console.log(this.name);
+
+//   }
+// }
+// var h: any = new user('aa')
+// h.run()
+
+
+// 属性装饰器
+function logProperty(params: string): any {
+  return function (target: any, attr: any): void {
+    console.log(target);
+    console.log(attr);
+    target[attr] = params
+  }
 }
-function printName(name:FullName): void{
-  console.log(name.firstName+name.secondName);
+class user {
+  @logProperty('logProperty')
+  public name: string | undefined
+  @logProperty('aa')
+  public age: string | undefined
+  constructor() {
+
+  }
+  getData(): void {
+    console.log(this.name+'在'+this.age);
+  }
 }
-var obj = {
-  age: 15,
-  firstName: '张',
-  secondName: '三'
-}
-printName(obj)
+var h = new user()
+h.getData()
