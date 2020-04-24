@@ -37,6 +37,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 //函数
 // function fn1(): string {
 //   return 'aa'
@@ -478,26 +481,73 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 // var h: any = new user('aa')
 // h.run()
 // 属性装饰器
-function logProperty(params) {
-    return function (target, attr) {
+// function logProperty(params: string): any {
+//   return function (target: any, attr: any): void {
+//     console.log(target);
+//     console.log(attr);
+//     target[attr] = params
+//   }
+// }
+// class user {
+//   @logProperty('logProperty')
+//   public name: string | undefined
+//   @logProperty('aa')
+//   public age: string | undefined
+//   constructor() {
+//   }
+//   getData(): void {
+//     console.log(this.name+'在'+this.age);
+//   }
+// }
+// var h = new user()
+// h.getData()
+// 方法装饰器
+// function logMethod(params: any): any{
+//   return function (target: any, methodName: any, desc: any) {
+//     console.log(params)
+//     console.log(target);
+//     console.log(methodName);
+//     console.log(desc);
+//     var oMethod = desc.value
+//     desc.value = function (...args: any[]):void{
+//       args = args.map((item):any =>  String(item))
+//       console.log(this);
+//       oMethod.apply(this,args)
+//     }
+//   }
+// }
+// class user {
+//   public name: string | undefined
+//   public age: string | undefined
+//   constructor() {
+//   }
+//   @logMethod('methods')
+//   getData(...args: any[]): void {
+//     console.log(args);
+//     console.log('我是getdata中原来的');
+//   }
+// }
+// var h = new user()
+// h.getData('xx',11)
+// 方法参数装饰器
+function logParams(params) {
+    return function (target, methodName, paramsIndex) {
+        console.log(params);
         console.log(target);
-        console.log(attr);
-        target[attr] = params;
+        console.log(methodName);
+        console.log(paramsIndex);
     };
 }
 var user = /** @class */ (function () {
     function user() {
     }
-    user.prototype.getData = function () {
-        console.log(this.name + '在' + this.age);
+    user.prototype.getData = function (arg) {
+        console.log('我是getdata中原来的');
     };
     __decorate([
-        logProperty('logProperty')
-    ], user.prototype, "name", void 0);
-    __decorate([
-        logProperty('aa')
-    ], user.prototype, "age", void 0);
+        __param(0, logParams('aa'))
+    ], user.prototype, "getData", null);
     return user;
 }());
-var h = new user();
-h.getData();
+var u = new user();
+u.getData('bbb');
