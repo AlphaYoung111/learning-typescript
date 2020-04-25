@@ -34,32 +34,32 @@
           <li class="categories dropdown">
             <a class="current-category dropdown-toggle" data-toggle="dropdown">
               全部
-              <span class="count badge"></span>
+              <span class="count badge">{{doFilter(-1)}}</span>
             </a>
             <ul class="dropdown-menu">
               <li class="total">
                 <a>
                   全部
-                  <span class="count badge"></span>
+                  <span class="count badge">{{doFilter(-1)}}</span>
                 </a>
               </li>
               <li class="divider"></li>
               <li>
                 <a>
                   工作
-                  <span class="count badge"></span>
+                  <span class="count badge">{{doFilter(0)}}</span>
                 </a>
               </li>
               <li>
                 <a>
                   生活
-                  <span class="count badge"></span>
+                  <span class="count badge">{{doFilter(1)}}</span>
                 </a>
               </li>
               <li>
                 <a>
                   学习
-                  <span class="count badge"></span>
+                  <span class="count badge">{{doFilter(2)}}</span>
                 </a>
               </li>
             </ul>
@@ -71,12 +71,23 @@
 </template>
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
+import ItemData from "../model/ItemData";
 
 @Component
 export default class MenuBar extends Vue {
   // 显示编辑框
   showAdd(): void {
+    this.$store.state.transMemo = new ItemData(-1, 0);
     this.$store.state.isShow = true;
+  }
+  doFilter(cid: number): number {
+    if (cid == -1) {
+      return this.$store.state.aHelper.memoList.length;
+    } else {
+      return this.$store.state.aHelper.memoList.filter(
+        (ele: any) => ele.categoryId == cid
+      ).length;
+    }
   }
 }
 </script>

@@ -44,6 +44,12 @@ import ItemData from "../model/ItemData";
 })
 export default class MemoEditor extends Vue {
   memo: ItemData = new ItemData(-1, 0);
+  constructor() {
+    super();
+  }
+  created(): void {
+    this.memo = this.$store.state.transMemo;
+  }
   closeWin(): void {
     this.$store.state.isShow = false;
   }
@@ -54,7 +60,11 @@ export default class MemoEditor extends Vue {
       this.memo.content.trim().length > 0 &&
       this.memo.categoryId > -1
     ) {
-      this.$store.state.aHelper.add(this.memo);
+      if (this.memo.id > -1) {
+        this.$store.state.aHelper.add(this.memo);
+      } else {
+        this.$store.state.aHelper.edit(this.memo);
+      }
       this.$store.state.isShow = false;
     }
   }
