@@ -1,0 +1,21 @@
+{
+  "name": "news",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "ts-node ./src/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/cheerio": "^0.22.18",
+    "cheerio": "^1.0.0-rc.3",
+    "superagent": "^5.2.2",
+    "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "@types/superagent": "^4.1.7"
+  }
+}
